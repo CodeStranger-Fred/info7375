@@ -80,16 +80,16 @@ func main() {
 	}
 
 	// e-greedy
-rGreedy  := RunPolicyRepeatedly(mdpGen, func() Policy { return Greedy{InitialActionValueEstimate: 0} }, numRuns, numSteps)
-rEps01   := RunPolicyRepeatedly(mdpGen, func() Policy { return GreedyEpsilon{InitialActionValueEstimate: 0, Epsilon: 0.1} }, numRuns, numSteps)
-rEps001  := RunPolicyRepeatedly(mdpGen, func() Policy { return GreedyEpsilon{InitialActionValueEstimate: 0, Epsilon: 0.01} }, numRuns, numSteps)
+	rGreedy  := RunPolicyRepeatedly(mdpGen, func() Policy { return Greedy{InitialActionValueEstimate: 0} }, numRuns, numSteps)
+	rEps01   := RunPolicyRepeatedly(mdpGen, func() Policy { return GreedyEpsilon{InitialActionValueEstimate: 0, Epsilon: 0.1} }, numRuns, numSteps)
+	rEps001  := RunPolicyRepeatedly(mdpGen, func() Policy { return GreedyEpsilon{InitialActionValueEstimate: 0, Epsilon: 0.01} }, numRuns, numSteps)
 
-// gradient（必须返回指针！）
-rGradA01 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.1, UseBaseline: false} }, numRuns, numSteps)
-rGradA04 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.4, UseBaseline: false} }, numRuns, numSteps)
-rGradB01 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.1, UseBaseline: true} },  numRuns, numSteps)
-rGradB04 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.4, UseBaseline: true} },  numRuns, numSteps)
+	// gradient
+	rGradA01 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.1, UseBaseline: false} }, numRuns, numSteps)
+	rGradA04 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.4, UseBaseline: false} }, numRuns, numSteps)
+	rGradB01 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.1, UseBaseline: true} },  numRuns, numSteps)
+	rGradB04 := RunPolicyRepeatedly(mdpGen, func() Policy { return &GradientBandit{Alpha: 0.4, UseBaseline: true} },  numRuns, numSteps)
 
-Plot(rGreedy, rEps01, rEps001, rGradA01, rGradA04, rGradB01, rGradB04)
+	Plot(rGreedy, rEps01, rEps001, rGradA01, rGradA04, rGradB01, rGradB04)
 
 }
