@@ -1,7 +1,5 @@
 package mdp
 
-import "math"
-
 func TDOffPolicyQLearning(mdp *MDP, episodes int, alpha float64, epsilon float64) DiscreteStateActionValueEstimator {
 	Q := DiscreteStateActionValueEstimator{}
 
@@ -27,10 +25,12 @@ func TDOffPolicyQLearning(mdp *MDP, episodes int, alpha float64, epsilon float64
 			reward := rPdf.Choose()
 
 			
-			bestNext := math.Inf(-1)
-			for _, q := range Q[nextState] {
-				if q > bestNext {
+			bestNext := Q[nextState][Action("")]
+			first := true
+			for a2, q := range Q[nextState] {
+				if first || q > bestNext {
 					bestNext = q
+					first = false
 				}
 			}
 
