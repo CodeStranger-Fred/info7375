@@ -5,6 +5,7 @@ import (
 	"math"
 	"strconv"
 
+	"github.com/CodeStranger-Fred/assignemnt1/mdp"
 	. "github.com/CodeStranger-Fred/assignemnt1/mdp"
 	"github.com/logrusorgru/aurora"
 )
@@ -27,12 +28,12 @@ func (w StochasticWindyGridWorld) MDP() MDP {
 	}
 	mdp.StateSpace = dss
 
-	das := DiscreteActionSpace{}
+	das := DiscreteActionSpace{Mapping: make(map[State][]Action)}
 	for _, s := range dss.States {
-		das.Actions[s] = []Action{"left", "right", "up", "down"}
+    	das.Mapping[s] = []Action{"left", "right", "up", "down"}
 	}
 	mdp.ActionSpace = das
-
+	mdp.RewardDiscount = 1
 	mdp.Terminal = map[State]bool{
 		w.State(0,0): true,
 		w.State(w.Rows-1, w.Cols-1): true,
@@ -182,7 +183,7 @@ func (w StochasticWindyGridWorld) PrintCurrentState(currentState State) {
 	}
 }
 
-func (w StochasticWindyGridWorld) PrintValueEstimates(estimator agent.StateValueEstimator) {
+func (w StochasticWindyGridWorld) PrintValueEstimates(estimator mdp.StateValueEstimator) {
 	for r := 0; r < w.Rows; r++ {
 		for c := 0; c < w.Cols; c++ {
 			st := w.State(r,c)
@@ -199,4 +200,37 @@ func format2x2(x float64) string {
 		return " -" + fmt.Sprintf("%05.2f", -x)
 	}
 	return fmt.Sprintf(" %05.2f", x)
+}
+
+func (w StochasticWindyGridWorld) PrintPolicy(policy mdp.Policy) {
+	mdp := w.MDP()
+	for r := 0; r < w.Rows; r++ {
+		for c := 0; c < w.Cols; c++ {
+			st := w.State(r, c)
+			var v string
+
+			if mdp.IsTerminal(st) {
+				v = "          "
+			} else {
+				topActions := policy.Act(nil, &mdp, st).(DiscretePdf[Action])
+				if len(topActions) > 1 {
+					v = "     -            "
+				} else {
+					for  a := range topActions {
+						switch a {
+						case "up": v = "    ⬆️           "
+						case "down": v = "     ⬇️              "
+						case "left": v = "⬅️          "
+						case "right": v = "             ➡️"
+						default: panic("bad action")
+						}
+					}
+				}
+			}
+
+			fmt.Print(aurora.Blue(v))
+			fmt.Print(aurora.White(fmt.Sprintf("|")))
+		}
+		fmt.Printf("\n")
+	}
 }

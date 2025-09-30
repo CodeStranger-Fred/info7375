@@ -21,4 +21,17 @@ func (a *Agent) Step(state0 State, action Action, state1 State, reward Reward) {
 	})
 }
 
+type StateValueEstimator interface {
+    Estimate(State) float64
+}
+
+type DiscreteStateValueEstimator map[State]Reward
+
+func (v DiscreteStateValueEstimator) Estimate(s State) float64 {
+	if val, ok := v[s]; ok {
+		return float64(val)
+	}
+	return 0.0
+}
+
 

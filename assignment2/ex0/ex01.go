@@ -1,7 +1,6 @@
 package main
 
 
-
 func main() {
 	gridworld := StochasticWindyGridWorld{
 		Rows: 4,

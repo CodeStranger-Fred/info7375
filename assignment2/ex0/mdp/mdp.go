@@ -24,7 +24,7 @@ type RewardFunction interface {
 type MDP struct {
 	TransitionFunction TransitionFunction
 	RewardFunction RewardFunction
-	ActionSpace DiscreteActionSpace
+	ActionSpace ActionSpace
 	StateSpace DiscreteStateSpace
 	InitialState State
 	RewardDiscount float64
@@ -34,4 +34,8 @@ type MDP struct {
 func (m MDP) IsTerminal(state State) bool {
 	term, ok := m.Terminal[state]
 	return term && ok
+}
+
+func (d DiscreteStateSpace) IsSingleton() bool {
+    return len(d.States) == 1
 }
