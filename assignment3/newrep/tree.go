@@ -90,7 +90,6 @@ func (t *tree) expand(leaf *node) *node {
 func (t *tree) rollout(start *node) float64 {
 	G := 0.0
 	s := start.state
-	player := start.player
 	term := start.terminal
 	depth := 0
 	for !term {
@@ -104,8 +103,7 @@ func (t *tree) rollout(start *node) float64 {
 		a := t.rp.Choose(s, acts)
 		var r float64
 		s, r, term = t.model.Step(s, a)
-		G += float64(player) * r
-		player = 1
+		G +=  r
 		depth++
 	}
 	return G
@@ -117,7 +115,6 @@ func (t *tree) backprop(path []*node, G float64) {
 		n.N++
 		n.W += G
 		n.Q = n.W / float64(n.N)
-		G = -G
 	}
 }
 
