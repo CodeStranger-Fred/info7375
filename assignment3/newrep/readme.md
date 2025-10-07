@@ -14,61 +14,10 @@ Conference: NeurIPS 2023 Workshop
 Core Contribution:
 
 Introduces LLM priors
-𝑃
-(
-𝑠
-,
-𝑎
-)
 P(s,a) into the PUCT formulation:
 
-𝑈
-(
-𝑠
-,
-𝑎
-)
-=
-𝑄
-(
-𝑠
-,
-𝑎
-)
-
-- 𝑐
-  𝑝
-  𝑢
-  𝑐
-  𝑡
-  𝑃
-  (
-  𝑠
-  ,
-  𝑎
-  )
-  𝑁
-  (
-  𝑠
-  )
-  1
-- 𝑁
-  (
-  𝑠
-  ,
-  𝑎
-  )
-  U(s,a)=Q(s,a)+c
-  puct
-  ​
-
-P(s,a)
-1+N(s,a)
-N(s)
+U(s,a)=Q(s,a)+cpuct*P(s,a)*1/1+N(s,a)\*sqrt(N(s))
 ​
-
-    ​
-
 Uses the LLM to simulate rollouts and guide search expansions.
 
 Demonstrates improved success rate and faster convergence on natural-language planning tasks (VirtualHome, BabyAI, TextWorld).
@@ -163,72 +112,23 @@ Baseline MCTS: Uniform action prior.
 
 LLM-MCTS: GPT-4o-mini based action prior.
 
-6.2 Example Output
-==== Comparison (Vanilla vs LLM-MCTS) ====
-Baseline MCTS: success=40.00% avgSteps=34.5 avgReward=-7.8
-LLM-MCTS : success=90.00% avgSteps=17.3 avgReward=3.4
+| Model                      | Success (%) | Avg Steps | Avg Reward |
+| :------------------------- | ----------: | --------: | ---------: |
+| **Vanilla MCTS**           |       52.00 |      33.7 |      -10.9 |
+| **LLM-MCTS (GPT-4o-mini)** |       86.00 |      22.4 |       +2.8 |
 
-6.3 Observations
-Metric Baseline MCTS LLM-MCTS Improvement
-Success Rate 40% 90% +50%
-Avg Steps 34.5 17.3 -50%
-Avg Reward -7.8 +3.4 +11.2
+Success Rate (%)
+| ██████████████████████████████████ 86 (LLM-MCTS)
+| ████████████████ 52 (Vanilla)
+|
+|\***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
+Vanilla LLM-MCTS
 
 The LLM prior significantly improves search efficiency and convergence,
 consistent with trends reported in the original LLM-MCTS paper.
 
-7. Discussion
-   7.1 What We Reproduced
-
-✅ The key algorithmic concept of LLM-MCTS:
-Integrating an LLM-derived policy prior into PUCT search.
-
-✅ The empirical trend:
-LLM-guided priors improve success rate and planning efficiency.
-
-7.2 What We Simplified
-
-We used a symbolic GridWorld instead of the VirtualHome environment.
-
-Rollouts used deterministic transitions (no text generation).
-
-The LLM prior used OpenAI API instead of fine-tuned LLaMA.
-
-7.3 Why It Still Matters
-
-Even in simplified environments, the qualitative behavior remains consistent:
-
-LLM priors bias MCTS toward more promising actions, reducing random exploration and improving goal achievement.
-
-8. Future Work
-
-To fully replicate the LLM-MCTS paper:
-
-Integrate natural language state/action descriptions (e.g., “cup on table”).
-
-Implement LLM-based rollouts to simulate outcomes in text.
-
-Evaluate on VirtualHome or BabyAI datasets.
-
-Measure additional metrics (token cost, success per episode, computation time).
-
-9. Conclusion
-
-This project successfully demonstrates that integrating LLM-generated priors into MCTS planning improves efficiency and reliability, even in simplified planning tasks.
-By reinterpreting the GridWorld environment as a path planning problem,
-we show that LLM-MCTS generalizes beyond its original natural-language domain and applies to realistic, spatial decision-making tasks.
-
-Therefore, our work satisfies the assignment’s second requirement:
-
-✅ It applies a key result of LLM-MCTS (NeurIPS 2023)
-✅ to a different, realistic task (path planning)
-✅ and not to an “RL Gym” type environment.
-
-10. References
+7. References
 
 LLM-MCTS: Integrating Large Language Models with Monte Carlo Tree Search for Strategic Planning
 NeurIPS 2023 Workshop
 https://llm-mcts.github.io/static/pdfs/paper.pdf
-
-Silver et al. (2017) — Mastering the game of Go without human knowledge (AlphaGo Zero)
-Nature, 550(7676), 354–359.

@@ -173,7 +173,7 @@ func main() {
 		MaxRolloutDepth: 60,
 		Prior: newrep.OpenAIChatPrior{
 			Model:  "gpt-4o-mini",
-			APIKey: os.Getenv("OPENAI_API_KEY"), //comment because want to protect API and you can use API here
+			APIKey: os.Getenv("OPEN_API_KEY"), //comment because want to protect API and you can use API here
 		},
 	}*/
 

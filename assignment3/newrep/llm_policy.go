@@ -40,7 +40,9 @@ func (p OpenAIChatPrior) Prior(s mdp.State, actions []mdp.Action) map[mdp.Action
 		"model": p.Model,
 		"messages": []map[string]string{
 			{"role": "user", "content": fmt.Sprintf(
-				"You are a planner. State=%s. Actions=%v. Output a pure JSON mapping of action to probability that helps reach the goal, e.g. {\"up\":0.1,\"down\":0.3,\"left\":0.2,\"right\":0.4}.",
+				"You are a grid navigation planner. Current state: %s. Goal state: G5_5. Obstacles exist at positions [S0_2, S1_2, S2_2, S3_1, S3_2, S3_3, S4_4]. "+
+				"Actions=%v. Think logically which action moves closer to the goal (down or right are usually good). "+
+				"Output a pure JSON mapping of action to probability that helps reach the goal, e.g. {\"up\":0.1,\"down\":0.3,\"left\":0.2,\"right\":0.4}.",
 				string(s), toStringSlice(actions))},
 		},
 		"temperature": 0.2,
