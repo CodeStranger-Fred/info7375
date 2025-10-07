@@ -3,7 +3,6 @@ package mdp
 func TDOnPolicySARSA(mdp *MDP, episodes int, alpha float64, epsilon float64) DiscreteStateActionValueEstimator {
 	Q := DiscreteStateActionValueEstimator{}
 
-	// 初始化
 	for _, s := range mdp.StateSpace.States {
 		Q[s] = map[Action]float64{}
 		for _, a := range mdp.ActionSpace.Actions(s) {
