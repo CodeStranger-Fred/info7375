@@ -114,12 +114,12 @@ LLM-MCTS: GPT-4o-mini based action prior.
 
 | Model                      | Success (%) | Avg Steps | Avg Reward |
 | :------------------------- | ----------: | --------: | ---------: |
-| **Vanilla MCTS**           |       52.00 |      33.7 |      -10.9 |
-| **LLM-MCTS (GPT-4o-mini)** |       86.00 |      22.4 |       +2.8 |
+| **Vanilla MCTS**           |       50.00 |      33.7 |      -23.0 |
+| **LLM-MCTS (GPT-4o-mini)** |       90.00 |      29.1 |      -6.05 |
 
 Success Rate (%)
-| ██████████████████████████████████ 86 (LLM-MCTS)
-| ████████████████ 52 (Vanilla)
+| ██████████████████████████████████ 90 (LLM-MCTS)
+| ████████████████ 50 (Vanilla)
 |
 |\***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
 Vanilla LLM-MCTS
