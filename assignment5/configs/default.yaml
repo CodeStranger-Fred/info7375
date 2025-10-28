@@ -1,0 +1,19 @@
+# configs/default.yaml
+model_name: "Qwen/Qwen2.5-3B"
+data_path: "data/countdown_dataset.json"
+output_dir: "output"
+
+# 训练参数
+num_epochs: 10
+batch_size: 1
+learning_rate: 5e-5
+beta: 0.1
+num_samples: 8
+max_length: 512
+
+# FSDP配置
+use_fsdp: true
+mixed_precision: true
+
+# 检查点设置
+save_steps: 100
