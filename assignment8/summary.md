@@ -17,9 +17,10 @@
 - **Evaluation Metric**: Execution accuracy (whether the generated SQL query produces the correct result on the corresponding table).
   LLMSQL prioritizes execution-based evaluation over logical-form matching to better align with LLM-generation behavior.
 - **Data Statistics**:
-  - Development set: 8,421 examples
-  - Test set: 15,878 examples
-  - **Samples evaluated**: 200 (stratified sample from test set)
+  - Total examples: approximately 80,000
+  - Updated train/dev/test splits with cleaned annotations
+  - Fixes include: Normalized string representations; Corrected numeric typing;Corrected conditions and cell values; More consistent schema formatting
+  - Samples evaluated in this assignment: 200 (stratified sample from test set)
 - **Table Format**: Each example includes:
   - Natural language question
   - Table schema (column names and types)
